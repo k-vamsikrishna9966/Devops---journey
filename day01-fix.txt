@@ -1,0 +1,14 @@
+Problem:
+nginx stopped
+
+Command:
+curl http://localhost
+
+Error:
+Failed to connect to localhost port 80
+
+Fix:
+sudo systemctl start nginx
+
+Result:
+Nginx page loaded successfully

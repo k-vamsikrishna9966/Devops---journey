@@ -1,0 +1,11 @@
+pwd
+ls
+cd backup
+mkdir day1
+rm -r day1
+touch day1.txt
+sudo apt update
+sudo apt install nginx
+sudo systemctl start nginx
+sudo systemctl stop nginx
+curl http://localhost
