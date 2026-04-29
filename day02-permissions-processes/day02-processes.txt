@@ -1,0 +1,64 @@
+Topic: ps, grep, kill commands + process management
+====================================================
+
+WHAT IS A PROCESS?
+A process is a running program in Linux.
+Each process has a PID (Process ID)
+
+----------------------------------------------------
+
+COMMAND: ps aux
+Shows all running processes
+
+Important:
+USER, PID, CPU, MEMORY, COMMAND
+
+----------------------------------------------------
+
+COMMAND: ps aux | grep nginx
+Used to find a specific process
+
+----------------------------------------------------
+
+COMMAND: kill <PID>
+Stops a process normally
+
+----------------------------------------------------
+
+COMMAND: kill -9 <PID>
+Force stops a process
+
+----------------------------------------------------
+
+BREAK TEST
+
+sleep 1000 &
+ps aux | grep sleep
+kill <PID>
+
+----------------------------------------------------
+
+REAL EXAMPLES
+
+Example 1:
+Problem: nginx not restarting
+Cause: old process running
+Fix: kill old process
+
+Example 2:
+Problem: system slow
+Cause: high CPU process
+Fix: find + kill process
+
+----------------------------------------------------
+
+WHAT I LEARNED
+
+1. Process = running program
+2. ps aux shows all processes
+3. grep filters processes
+4. kill stops process
+5. kill -9 force kills process
+
+====================================================
+END OF DAY 02 PROCESSES

@@ -1,0 +1,168 @@
+DAY 02 — PERMISSIONS
+---------------------------------------------------
+----------------------------------------------------
+    Topic: chmod, chown commands + what each does
+====================================================
+
+----------------------------------------------------
+WHAT ARE PERMISSIONS?
+----------------------------------------------------
+Every file in Linux has 3 types of permissions:
+  r = read   (can view the file)
+  w = write  (can edit the file)
+  x = execute (can run the file)
+
+These permissions apply to 3 groups:
+  Owner   = the person who created the file
+  Group   = a team of users
+  Others  = everyone else
+
+----------------------------------------------------
+PERMISSION NUMBERS (chmod values)
+----------------------------------------------------
+4 = read
+2 = write
+1 = execute
+
+You add them together:
+  7 = 4+2+1 = read + write + execute (full access)
+  6 = 4+2   = read + write
+  5 = 4+1   = read + execute
+  4 = 4     = read only
+  0 = 0     = no permission at all
+
+----------------------------------------------------
+COMMANDS I RAN TODAY
+----------------------------------------------------
+
+COMMAND 1: touch test.txt
+---------------------------
+What it does: Creates an empty file called test.txt
+Why I used it: To create a file to practice permissions on
+
+Output: (no output — file created silently)
+
+----------------------------------------------------
+
+COMMAND 2: chmod 000 test.txt
+------------------------------
+What it does: Removes ALL permissions from the file
+  0 = no permission for owner
+  0 = no permission for group
+  0 = no permission for others
+
+Why I used it: To understand what happens when permissions are removed
+
+----------------------------------------------------
+
+COMMAND 3: cat test.txt (after chmod 000)
+------------------------------------------
+What it does: Tries to read the file
+
+Output:
+  cat: test.txt: Permission denied
+
+Why it failed:
+  chmod 000 removed read permission
+  Linux kernel blocked access immediately
+
+----------------------------------------------------
+
+COMMAND 4: chmod 644 test.txt
+------------------------------
+What it does:
+  6 = read + write (owner)
+  4 = read (group)
+  4 = read (others)
+
+Why I used it:
+To restore safe default permissions
+
+----------------------------------------------------
+
+COMMAND 5: cat test.txt (after chmod 644)
+------------------------------------------
+What happened:
+  SUCCESS — file is readable
+
+Why it worked:
+  Read permission restored
+
+----------------------------------------------------
+
+BREAK + FIX EXERCISE
+----------------------------------------------------
+STEP 1: Create script
+  touch script.sh
+  echo "echo Hello DevOps" > script.sh
+
+STEP 2: Remove permissions
+  chmod 000 script.sh
+
+STEP 3: Try to execute
+  ./script.sh
+
+Output:
+  Permission denied
+
+Reason:
+  No execute permission
+
+STEP 4: Fix permission
+  chmod 755 script.sh
+
+STEP 5: Run again
+  ./script.sh
+
+Output:
+  Hello DevOps
+
+Reason:
+  Execute permission restored
+
+----------------------------------------------------
+CHOWN (CHANGE OWNERSHIP)
+----------------------------------------------------
+
+COMMAND: chown user:group filename
+
+What it does:
+Changes the owner and group of a file
+
+Example 1:
+  chown vamsi:vamsi test.txt
+  → Owner = vamsi
+  → Group = vamsi
+
+Example 2 (Real-world):
+Problem:
+  Nginx cannot read config file
+
+Cause:
+  File owned by root
+  Nginx runs as www-data
+
+Fix:
+  chown www-data:www-data /etc/nginx/nginx.conf
+
+----------------------------------------------------
+WHAT I LEARNED
+----------------------------------------------------
+1. Linux checks BOTH ownership and permissions
+2. chmod 000 completely blocks access
+3. chmod 644 is safe for files
+4. chmod 755 is required for scripts
+5. chown controls who owns the file
+6. Permission denied can be due to ownership or permissions
+
+----------------------------------------------------
+CHMOD QUICK REFERENCE
+----------------------------------------------------
+chmod 000  = no access
+chmod 400  = read only (owner)
+chmod 644  = standard file permission
+chmod 755  = standard script permission
+chmod 777  = full access (unsafe)
+
+====================================================
+END OF DAY 02 PERMISSIONS
