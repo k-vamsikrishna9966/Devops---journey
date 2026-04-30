@@ -1,0 +1,186 @@
+DAY 3 — NETWORKING FUNDAMENTALS
+
+============================================================
+NETWORK FLOW (CORE)
+============================================================
+1. DNS → resolve domain to IP
+2. TCP → establish connection to IP:port
+3. HTTP → send request (GET/HEAD)
+4. Server → process request (nginx/app)
+5. Response → return status code + data
+
+If any step fails, everything after it fails.
+
+============================================================
+COMMAND 1: ping google.com
+============================================================
+Command:
+ping -c 2 google.com
+
+What it shows:
+- DNS resolution (domain → IP)
+- Network connectivity
+- Latency (round-trip time)
+
+Output meaning:
+- google.com (142.x.x.x) → DNS resolved correctly
+- time=XX ms → latency
+- ttl=XXX → hop indicator
+
+Key point:
+- Uses ICMP (network layer)
+- Does NOT test HTTP or application
+
+============================================================
+COMMAND 2: curl http://localhost
+============================================================
+Command:
+curl http://localhost
+
+What it does:
+- Sends HTTP GET request to 127.0.0.1:80
+
+Output:
+- HTML → service running
+- Connection refused → no service on port 80
+
+Key point:
+- Tests application layer (HTTP)
+
+============================================================
+COMMAND 3: ss -tuln
+============================================================
+Command:
+ss -tuln
+
+What it shows:
+- All listening ports
+
+Flags:
+-t → TCP
+-u → UDP
+-l → listening ports
+-n → numeric output
+
+Output meaning:
+- 0.0.0.0:80 → service accessible on all interfaces
+- 127.0.0.1:3306 → local-only service
+
+============================================================
+COMMAND 4: curl -I http://google.com
+============================================================
+Command:
+curl -I http://google.com
+
+What it does:
+- Sends HEAD request (headers only)
+
+Output:
+HTTP/1.1 301 Moved Permanently
+Location: https://google.com/
+
+Meaning:
+- Server redirects HTTP → HTTPS
+
+============================================================
+BREAK TEST (FAIL → DIAGNOSE → FIX)
+============================================================
+
+Step 1 — Working state
+curl http://localhost
+ss -tuln | grep :80
+
+Output:
+- HTML response → service running
+- 0.0.0.0:80 → port open
+
+Step 2 — Stop service
+sudo systemctl stop nginx
+
+Step 3 — Failure
+curl http://localhost
+
+Output:
+Connection refused
+
+Root cause:
+- No service listening on port 80
+
+Step 4 — Verify
+ss -tuln | grep :80
+
+Output:
+(no output) → port closed
+
+Step 5 — Fix
+sudo systemctl start nginx
+
+Step 6 — Confirm
+curl http://localhost
+
+Output:
+HTML response → service restored
+
+============================================================
+PROTOCOL + PORT RULE
+============================================================
+HTTP  → port 80
+HTTPS → port 443
+
+Example:
+curl http://localhost:443   (fails)
+curl https://localhost      (works)
+
+Reason:
+- Port 443 expects HTTPS (TLS encryption)
+
+============================================================
+FAILURE CASES
+============================================================
+
+Case 1 — DNS failure
+ping google.com → fails
+ping 8.8.8.8 → works
+
+Cause:
+- DNS resolution failure
+
+Case 2 — Service down
+curl http://localhost → connection refused
+
+Cause:
+- No process listening on port 80
+
+============================================================
+DEBUG CHECKLIST
+============================================================
+1. ping <host> → network/DNS
+2. nslookup <host> → DNS only
+3. ss -tuln → ports
+4. systemctl status → service
+5. curl → HTTP
+
+============================================================
+KEY CONCEPTS
+============================================================
+
+DNS:
+- Converts domain → IP
+- Order: cache → /etc/hosts → resolver → DNS servers
+
+TCP:
+- Establishes connection (3-way handshake)
+- Required before HTTP
+
+HTTP:
+- Request/response protocol
+- Methods: GET, POST, PUT, DELETE
+
+Ports:
+- Identify services on a machine
+- IP = machine, Port = service
+
+============================================================
+FINAL NOTE
+============================================================
+Run commands → observe output → understand meaning.
