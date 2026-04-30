@@ -49,3 +49,23 @@ See: `day01-commands.txt`
 - chown changes ownership
 - ps shows running processes
 - kill stops processes
+- 
+## Day 03 - Networking Fundamentals
+
+## What I Did
+- Tested DNS and connectivity using ping
+- Sent HTTP requests using curl
+- Checked open ports using ss
+- Verified HTTP headers using curl -I
+
+## Break & Fix
+- curl http://localhost failed → connection refused
+- Checked port using ss -tuln → port 80 not listening
+- Identified nginx service stopped
+- Started nginx → issue resolved
+
+## Learning
+- DNS resolves domain to IP
+- TCP connects to IP:port
+- HTTP sends request and receives response
+- Port must be open for service to respond
