@@ -69,3 +69,42 @@ See: `day01-commands.txt`
 - TCP connects to IP:port
 - HTTP sends request and receives response
 - Port must be open for service to respond
+
+- ## Day 04 — DNS & Ports
+
+### What I Did
+- Used nslookup for DNS resolution
+- Compared domain IP addresses
+- Learned common ports
+- Used ss -tuln to view listening ports
+
+### Ports Learned
+- 80 = HTTP
+- 443 = HTTPS
+- 22 = SSH
+- 3306 = MySQL
+
+### Break & Fix
+- Modified /etc/hosts incorrectly
+- DNS resolution failed
+- Fixed hosts file and restored connectivity
+
+---
+
+## Day 05 — Firewall & UFW
+
+### What I Did
+- Enabled UFW firewall
+- Allowed SSH and HTTP traffic
+- Blocked and unblocked ports
+- Verified firewall rules
+
+### Break & Fix
+- Blocked port 80
+- Website became inaccessible
+- Allowed port 80 again
+- Website worked successfully
+
+---
+
+
