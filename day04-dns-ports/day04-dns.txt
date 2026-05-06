@@ -1,0 +1,59 @@
+DAY 4 — DNS + PORTS
+
+1. DNS Lookup
+Command:
+nslookup google.com
+
+Purpose:
+Used to resolve domain names into IP addresses.
+
+--------------------------------------------------
+
+2. Compare DNS Resolution
+Command:
+nslookup amazon.com
+
+Purpose:
+Checks how another domain resolves to an IP address.
+
+--------------------------------------------------
+
+3. Check Listening Ports
+Command:
+ss -tuln
+
+Purpose:
+Displays active listening ports and network services.
+
+Meaning of options:
+-t = TCP
+-u = UDP
+-l = listening
+-n = numeric format
+
+--------------------------------------------------
+
+4. Common Ports
+
+80   = HTTP
+443  = HTTPS
+22   = SSH
+3306 = MySQL
+
+--------------------------------------------------
+
+5. /etc/hosts Testing
+
+Purpose:
+Used to manually map domain names to IP addresses.
+
+Example:
+Wrong IP in /etc/hosts causes connection failure.
+Fixing IP restores connectivity.
+
+--------------------------------------------------
+
+Key Learning:
+DNS converts domain names into IP addresses.
+Ports identify which service handles network traffic.
+Most connectivity problems involve DNS or blocked ports.
